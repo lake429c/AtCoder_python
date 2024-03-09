@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  atcoder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # 元となるイメージ名の指定
+    image: hinamimi/atcoder:m1mac
+    # コンテナ名を明示的に指定する
+    container_name: atcoder_container
+    # ホスト名を明示的に指定する
+    hostname: home
+    volumes:
+      - ./problems:/root/problems:cached
+      - ./library:/root/library:cached
+      - ./acc-template-python:/root/.config/atcoder-cli-nodejs/python:cached
+      - ./.vscode:/root/.vscode:cached
+      - ./.zshrc:/root/.zshrc:cached
+    # Overrides default command so things don't shut down after the process ends.
+    command: /bin/sh -c "while sleep 1000; do :; done"
+
